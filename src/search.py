@@ -155,13 +155,23 @@ class RAGProcessor:
             query_result = self.collection.query(
                 query_embeddings=query_embedding,
                 n_results=self.n_results,
-                include=["documents"]
+                include=["documents", "distances"]  # Replace 'similarity_scores' with 'distances'
             )
             documents = query_result.get('documents', [[]])[0]
+            distances = query_result.get('distances', [[]])[0]  # Retrieve distances if needed
             if not documents:
                 self.logger.warning("No related documents found.")
-            self.logger.debug(f"Retrieved {len(documents)} related documents.")
-            return documents
+            self.logger.info(distances)
+            # Optionally, process distances if you need similarity scores
+            # For example, converting distances to similarity scores
+            similarity_threshold = 0.6  # Example threshold
+            # Assuming lower distance means higher similarity
+            filtered_documents = [
+                doc for doc, distance in zip(documents, distances) if distance <= (1 - similarity_threshold)
+            ]
+            
+            self.logger.debug(f"Retrieved {len(filtered_documents)} highly relevant documents.")
+            return filtered_documents
         except Exception as e:
             self.logger.error(f"Failed to query related documents: {e}")
             raise
