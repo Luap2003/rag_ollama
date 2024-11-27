@@ -14,8 +14,7 @@ RAG Ollama is a project aimed at implementing a Retrieval-Augmented Generation (
 1. Clone the project
 2. Start a ChromaDB
 ```[bash]
-chroma run --host localhost --port 8000   
-                      
+chroma run --host localhost --port 8000                      
 ```
 3. Create a scripts folder where you put you files, it only reads txt files
 ```
