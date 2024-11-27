@@ -4,7 +4,7 @@ import logging
 import argparse
 from typing import Dict, List
 import chromadb
-from functions import readtextfiles, chunksplitter, getembedding
+from helper_funcs import readtextfiles, chunksplitter, getembedding
 import colorlog
 from logger import setup_logger
 
